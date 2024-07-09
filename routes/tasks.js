@@ -7,6 +7,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const tasks = await Task.find({ userId: req.user._id });
+        console.log(tasks);
         res.json(tasks);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -18,6 +19,7 @@ router.post('/', authMiddleware, async (req, res) => {
     const { title, description, dueDate, priority, reminder } = req.body;
     try {
         const newTask = new Task({ title, description, dueDate, priority, reminder, userId: req.user._id });
+        console.log(newTask);
         const savedTask = await newTask.save();
         res.json(savedTask);
     } catch (err) {
